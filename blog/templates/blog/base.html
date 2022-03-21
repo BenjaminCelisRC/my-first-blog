@@ -10,16 +10,24 @@
 
     </head>
     <body>
-        <header class="page-header">
-            <div class="container">
+        <div class="page-header">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'post_new' %}" class="top-menu">
+                    <a href="{% url 'post_new' %}" title="New post" class="top-menu">
                         {% include './icons/file-earmark-plus.svg' %}
                     </a>
-                {% endif %}
+                    <a href="{% url 'post_draft_list' %}" title="Drafts" class="top-menu">
+                        {% include './icons/file-earmark-text.svg' %}
+                    </a>
+                    <a href="{% url 'logout' %}" title="Log Out" class="top-menu">
+                        {% include './icons/box-arrow-right.svg' %}
+                    </a>
+                    <p class="top-menu">Hello {{ user.username }}</p>
+                {% else %}
+                    <a href="{% url 'login' %}" title="Log in" class="top-menu">
+                        {% include './icons/file-earmark-lock.svg' %}
+                    </a>{% endif %}
                 <h1><a href="/">Benjamin's Blog</a></h1>
-            </div>
-        </header>
+        </div>
         <main class="container">
             <div class="row">
                 <div class="col">
