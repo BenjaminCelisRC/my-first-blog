@@ -8,6 +8,7 @@
             <time class="date">
                 {{ post.published_date }}
             </time>
+            <strong>Comments:{{post.approved_comments.count}}</strong>
         </article>
     {% endfor %}
 {% endblock %}

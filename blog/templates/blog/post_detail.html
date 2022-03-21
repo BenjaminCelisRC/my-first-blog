@@ -15,6 +15,7 @@
         </aside>
         <h2>{{ post.title }}</h2>
         <p>{{ post.text|linebreaksbr }}</p>
+        <a class="btn btn-success" href="{% url 'add_comment_to_post' pk=post.pk %}">Add Comment</a>
         <time class="date">
             {% if post.published_date %}
                 Published: {{ post.published_date }}
@@ -23,4 +24,22 @@
             {% endif %}
         </time>
     </article>
+    <hr>
+    {% for comment in post.comments.all %}
+        {% if comment.approved_comment or user.is_authenticated%}
+            <div class="comment">
+                <div>
+                    <h3>{{comment.author}}</h3>
+                    <small><time>{{comment.created_date}}</time></small>
+                    {% if not comment.approved_comment %}
+                        <a class="btn btn-success" href="{% url 'comment_approve' pk=comment.pk %}">Approve</a>
+                        <a class="btn btn-danger" href="{% url 'comment_remove' pk=comment.pk %}">Remove</a>
+                    {% endif %}
+                </div>
+                <p>{{comment.text|linebreaksbr}}</p>
+            </div>
+        {% endif %}
+    {% empty %}
+            <p>There are no comments yet.</p>
+    {% endfor %}
 {% endblock %}
